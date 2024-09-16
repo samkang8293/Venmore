@@ -15,11 +15,13 @@ const io = new Server(server)
 app.use(express.json())
 app.use(cors())
 
-app.use(express.static('public'))
+app.use(express.static('dist'))
 
 app.get('/', (req, res) => {
-
+    res.json()
 })
 
 mongoose.connect(process.env.DSN)
 
+io.on()
+// socket.broadcast.emit('event name', 'message') - for multi-user venmo request
