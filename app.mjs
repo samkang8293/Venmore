@@ -28,12 +28,12 @@ passport.use(new LocalStrategy(async (username, password, done) => {
         const user = await User.find({username: username})
 
         // if the username doesn't exist, send an error message
-        if (!user) {
+        if (!(user)) {
             return done(null, false, { message: 'Incorrect username or password'})
         }
 
         // if the password doesn't match from bcrypt comparing salt and hash, send error message
-        else if (bcrypt.compareSync(password, user.password)) {
+        else if (!(bcrypt.compareSync(password, user.password))) {
             return done(null, false, {message: 'Incorrect username or password'})
         } 
         
