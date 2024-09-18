@@ -51,7 +51,8 @@ passport.serializeUser(async (user, done) => {
     const loggedUser = await User.find({username: user.username})
     return done(null, {
         id: loggedUser.id,
-        username: loggedUser.username
+        username: loggedUser.username,
+        name: user.name
     })
 })
 
@@ -60,15 +61,22 @@ passport.deserializeUser((user, done) => {
     return done(null, user)
 })
 
-app.get('/', (req, res) => {
-    res.json()
+app.post('/login', passport.authenticate('local'), (req, res) => {
+    res.send(req.user)
 })
 
-app.get('/login', (req, res) => {
-
+app.post('/logout', (req, res, next) => {
+    req.logout((err) => {
+        if (err) {
+            return next(err)
+        }
+        res.redirect('/')
+    })
 })
 
 mongoose.connect(process.env.DSN)
 
 io.on()
 // socket.broadcast.emit('event name', 'message') - for multi-user venmo request
+
+app.listen(process.env.PORT ?? 3000)
