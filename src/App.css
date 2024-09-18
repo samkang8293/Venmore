@@ -40,3 +40,24 @@
 .read-the-docs {
   color: #888;
 }
+
+.navbar {
+  height: 50px;
+  background-color: #008CFF;
+  color : #FFFF;
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+
+.menuItem {
+  float: left;
+  display: block;
+  padding: 8px;
+}
