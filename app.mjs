@@ -22,7 +22,7 @@ app.use(cors())
 
 app.use(express.static('dist'))
 
-passport.use(new LocalStrategy(async (username, password, cb) => {
+passport.use(new LocalStrategy(async (username, password, done) => {
     // access MongoDB to retrieve user information
     const user = await User.find({username: username})
     const pw = await User.find({username: username}, {'password': password})
@@ -41,10 +41,26 @@ passport.use(new LocalStrategy(async (username, password, cb) => {
     }
 }))
 
-// add cookies session from passport somewhere for making sure user stays logged in
+// serialize user session
+passport.serializeUser(async (user, done) => {
+    const loggedUser = await User.find({username: user.username})
+    return done(null, {
+        id: loggedUser.id,
+        username: loggedUser.username
+    })
+})
+
+// deserialize user session
+passport.deserializeUser((user, done) => {
+    return done(null, user)
+})
 
 app.get('/', (req, res) => {
     res.json()
+})
+
+app.get('/login', (req, res) => {
+
 })
 
 mongoose.connect(process.env.DSN)
