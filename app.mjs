@@ -23,21 +23,26 @@ app.use(cors())
 app.use(express.static('dist'))
 
 passport.use(new LocalStrategy(async (username, password, done) => {
-    // access MongoDB to retrieve user information
-    const user = await User.find({username: username})
-    const pw = await User.find({username: username}, {'password': password})
+    try {
+        // access MongoDB to retrieve user information
+        const user = await User.find({username: username})
 
-    // if the username doesn't exist, send an error message
-    if (!user) {
-        return done(null, false, { message: 'Incorrect username or password'})
-    }
+        // if the username doesn't exist, send an error message
+        if (!user) {
+            return done(null, false, { message: 'Incorrect username or password'})
+        }
 
-    // hash the password to check MongoDB's record of hashed password, adding salt value of 10
-    const hashedpw = bcrypt.hashSync(password, 10)
-
-    // if the password doesn't match, send error message
-    if (hashedpw !== pw) {
-        return done(null, false, {message: 'Incorrect username or password'})
+        // if the password doesn't match from bcrypt comparing salt and hash, send error message
+        else if (bcrypt.compareSync(password, user.password)) {
+            return done(null, false, {message: 'Incorrect username or password'})
+        } 
+        
+        // else username and password are correct, so pass to session
+        else {
+            return done(null, user)
+        }
+    } catch (e) {
+        done(e)
     }
 }))
 
