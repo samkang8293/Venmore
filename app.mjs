@@ -8,19 +8,29 @@ import passport from 'passport'
 import LocalStrategy from 'passport-local'
 import bcrypt from 'bcrypt'
 
-import { User, Payment } from './db.mjs'
+import './db.mjs'
 import './config.mjs'
 
 const app = express()
 const server = createServer(app)
 const io = new Server(server)
 
+app.use(session({
+    secret: process.env.SECRET_KEY,
+    resave: false,
+    saveUninitialized: false
+}))
+
 app.use(express.json())
 app.use(passport.initialize())
 app.use(passport.session())
-app.use(cors())
+app.use(cors({
+    origin: 'http://localhost:5173'
+}))
 
 app.use(express.static('dist'))
+
+mongoose.connect(process.env.DSN)
 
 passport.use(new LocalStrategy(async (username, password, done) => {
     try {
@@ -61,6 +71,14 @@ passport.deserializeUser((user, done) => {
     return done(null, user)
 })
 
+app.get('/login', (req, res) => {
+    if (req.user) {
+        res.json(req.user)
+    } else {
+        res.json(req.user)
+    }
+})
+
 app.post('/login', passport.authenticate('local'), (req, res) => {
     res.send(req.user)
 })
@@ -74,9 +92,7 @@ app.post('/logout', (req, res, next) => {
     })
 })
 
-mongoose.connect(process.env.DSN)
-
-io.on()
+// io.on()
 // socket.broadcast.emit('event name', 'message') - for multi-user venmo request
 
 app.listen(process.env.PORT ?? 3000)
