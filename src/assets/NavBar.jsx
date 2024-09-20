@@ -2,19 +2,22 @@ import { useState, useEffect } from 'react'
 import '../App.css'
 
 const NavBar = () => {
-    const [user, setUser] = useState("")
-    // if I'm retrieving user info, I'd have to do something with sessions and mongo
-    useEffect(async () => {
-        try {
-            const res = await fetch('/login')
-            const status = await res.json()
-
-            if (status) {
-                setUser(status.user)
+    const [user, setUser] = useState(null)
+    // For payment option, add link to navigate to sending payment/request page
+    useEffect(() => {
+        const getUser = async (url) => {
+            try {
+                const res = await fetch(url)
+                const status = await res.json()
+    
+                if (status) {
+                    setUser(status.user)
+                }
+            } catch (e) {
+                console.error(e)
             }
-        } catch (e) {
-            console.error(e)
         }
+        getUser('/login')
     }, [])
     return (
         <>
