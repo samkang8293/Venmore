@@ -72,11 +72,7 @@ passport.deserializeUser((user, done) => {
 })
 
 app.get('/login', (req, res) => {
-    if (req.user) {
-        res.json(req.user)
-    } else {
-        res.json(req.user)
-    }
+    res.json(req.user)
 })
 
 app.post('/login', passport.authenticate('local'), (req, res) => {
