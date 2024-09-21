@@ -88,6 +88,43 @@ app.post('/logout', (req, res, next) => {
     })
 })
 
+app.post('/register', async (req, res) => {
+    const username = req.body.username
+    const name = req.body.name
+    const password = req.body.password
+
+    try {
+        const exist = await User.find({username: username})
+        if (exist) {
+            res.send({messsage: 'Username already exists'})
+        } else {
+            // hash password with salt value of 10
+            const hashedPassword = bcrypt.hashSync(password, 10)
+    
+            const newUser = new User({
+                name: name,
+                username: username,
+                password: hashedPassword,
+                payment: []
+            })
+            await newUser.save()
+
+            req.logIn(newUser, (err) => {
+                if (err) {
+                    return res.send({message: 'Error logging in'})
+                }
+                res.json({
+                    id: newUser.id,
+                    username: newUser.username,
+                    name: newUser.name
+                })
+            })
+        }
+    } catch(e) {
+        console.error(e)
+    }
+})
+
 // io.on()
 // socket.broadcast.emit('event name', 'message') - for multi-user venmo request
 
