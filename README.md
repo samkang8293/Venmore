@@ -39,7 +39,7 @@ An Example Payment/Request:
 }
 ```
 
-## [Link to Commented First Draft Schema] ()
+## [Link to Commented First Draft Schema](db.mjs)
 
 ## Wireframes
 
