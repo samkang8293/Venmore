@@ -20,6 +20,10 @@ const Register = () => {
             }
         })
         const status = await res.json()
+
+        if (status.user) {
+            window.location.href('/')
+        }
     }
 
     return (
@@ -27,10 +31,18 @@ const Register = () => {
             <div className="register">
                 <h1>Sign Up</h1>
                 <h3>Fill in the information below</h3>
-                <input type="text" name="name" placeholder="Full Name" onChange={(e) => setName(e.target.value)}/>
-                <input type="text" name="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)}/>
-                <input type="text" name="username" placeholder="Username" onChange={(e) => setUsername(e.target.value)}/>
-                <input type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
+                <div className="py-2.5">
+                    <input className="flexbox center h-14 rounded-md border border-gray-300" type="text" name="name" placeholder="Full Name" onChange={(e) => setName(e.target.value)}/>
+                </div>
+                <div className="py-2.5">
+                    <input className="flexbox center h-14 rounded-md border border-gray-300" type="text" name="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)}/>
+                </div>
+                <div className="py-2.5">
+                    <input className="flexbox center h-14 rounded-md border border-gray-300" type="text" name="username" placeholder="Username" onChange={(e) => setUsername(e.target.value)}/>
+                </div>
+                <div className="register py-2.5">
+                    <input className="flexbox center h-14 rounded-md border border-gray-300" type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
+                </div>
                 <button onClick={handleRegister}>Sign Up</button>
             </div>
         </>
