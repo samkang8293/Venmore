@@ -6,6 +6,7 @@ const Login = () => {
 
     const handleLogin = async (evt) => {
         try {
+            // validate login information to backend
             const res = await fetch('/login', {
                 method: 'POST',
                 body: JSON.stringify({
@@ -16,11 +17,12 @@ const Login = () => {
                     'Content-Type' : 'application/json'
                 }
             })
+            // await login status
             const status = await res.json()
 
-            if (status.username === username && status.password === password) {
-                // need to figure out what to do after login confirm
-                alert("Login Success!")
+            if (status.user) {
+                // navigate to the main page
+                window.location.href('/')
             }
         } catch (e) {
             console.log(e)
@@ -29,18 +31,18 @@ const Login = () => {
 
     return (
         <>
-            <div className="login">
+            <div className="login rounded-md border-gray-200">
                 <h1>Venmore</h1>
                 <h2>Log In</h2>
                 <div className="py-2.5">
-                    <input className="flexbox center h-14 rounded-md" type="text" name="username" placeholder="Username" onChange={(e) => {setUsername(e.target.value)}}/>
+                    <input className="flexbox center h-14 rounded-md border border-gray-300" type="text" name="username" placeholder="Username" onChange={(e) => {setUsername(e.target.value)}}/>
                 </div>
                 <div className="pb-2.5">
-                    <input className="flexbox center h-14 rounded-md" type="password" name="password" placeholder="Password" onChange={(e) => {setPassword(e.target.value)}}/>
+                    <input className="flexbox center h-14 rounded-md border border-gray-300" type="password" name="password" placeholder="Password" onChange={(e) => {setPassword(e.target.value)}}/>
                 </div>
                 <button onClick={handleLogin}>Login</button>
             </div>
-            <div className="register">
+            <div className="register py-2.5">
                 <a href="/register">Register</a>
             </div>
         </>
