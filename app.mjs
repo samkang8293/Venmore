@@ -125,7 +125,12 @@ app.post('/register', async (req, res) => {
     }
 })
 
-// io.on()
+io.on("connection", (socket) => {
+    socket.on('request', ({fromUser, toUser, amount}) => {
+        socket.emit()
+    })
+})
 // socket.broadcast.emit('event name', 'message') - for multi-user venmo request
+// emitting messages for sending the request will be done in frontend/client
 
 app.listen(process.env.PORT ?? 3000)
