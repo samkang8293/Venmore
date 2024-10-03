@@ -125,6 +125,16 @@ app.post('/register', async (req, res) => {
     }
 })
 
+// get all user data for search function
+app.get('/users', async (req, res) => {
+    try {
+        const users = await User.find({}).select('-password -email')
+        res.json(users)
+    } catch(e) {
+        console.log(e)
+    }
+})
+
 io.on("connection", (socket) => {
     socket.on('request', ({fromUser, toUser, amount}) => {
         socket.emit()
