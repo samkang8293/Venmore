@@ -5,6 +5,7 @@ mongoose.connect(process.env.DSN)
 
 const userSchema = mongoose.Schema({
     name: {type: String, required: true},
+    email: {type: String, required: true},
     username: {type: String, required: true},
     password: {type: String, required: true},
     payment: [{type: mongoose.Schema.Types.ObjectId, ref: 'Payment'}]
