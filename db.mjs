@@ -9,7 +9,7 @@ const userSchema = mongoose.Schema({
     username: {type: String, required: true},
     password: {type: String, required: true},
     payment: [{type: mongoose.Schema.Types.ObjectId, ref: 'Payment'}]
-})
+}, { timestamps: true })
 
 const paymentSchema = mongoose.Schema({
     paymentId: {type: String, required: true},
@@ -17,10 +17,9 @@ const paymentSchema = mongoose.Schema({
     paymentType: {type: String, required: true},
     comment: {type: String, required: true},
     amount: {type: Number, required: true},
-    createdAt: {type: Date, required: true},
     receiver: {type: String, required: true},
     status: {type: String, required: true}
-})
+}, { timestamps: true })
 
 const User = mongoose.model('User', userSchema)
 const Payment = mongoose.model('Payment', paymentSchema)
