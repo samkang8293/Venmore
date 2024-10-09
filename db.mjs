@@ -17,7 +17,7 @@ const paymentSchema = mongoose.Schema({
     paymentType: {type: String, required: true},
     comment: {type: String, required: true},
     amount: {type: Number, required: true},
-    receiver: {type: String, required: true},
+    receiver: [{type: String, required: true}],
     status: {type: String, required: true}
 }, { timestamps: true })
 
