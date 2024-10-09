@@ -135,6 +135,30 @@ app.get('/users', async (req, res) => {
     }
 })
 
+app.post('/payment/request', async (req, res) => {
+    try {
+        const receivers = req.receiver
+        const newRequest = new Payment({
+            user: req.user,
+            paymentType: req.paymentType,
+            comment: req.comment,
+            amount: req.amount,
+            receiver: receivers,
+            status: 'Pending'
+        })
+        await newRequest.save()
+
+        receivers.forEach((rep) => {
+            io.to(rep).emit('request', {
+                sender: req.user, 
+                amount: req.amount, 
+                message: `${req.user} requests $${req.amount}`})
+        })
+    } catch (e) {
+        console.log(e)
+    }
+})
+
 io.on("connection", (socket) => {
     socket.on('request', ({fromUser, toUser, amount}) => {
         socket.emit()
