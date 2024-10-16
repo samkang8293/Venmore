@@ -50,7 +50,7 @@ const Payment = () => {
         <>
             <div className="payment">
                 {/* set setUsers property in SearchBar component */}
-                <Search />
+                <Search setUsers={setRecipients} />
                 <div className="">
                     <label forHTML="amount">$</label>
                     <input type="number" name="amount" placeholder="Amount" onChange={(e) => {setAmount(e.target.value)}}/>

@@ -18,14 +18,18 @@ const Search = () => {
         getUsers('/users')
     }, [])
 
+    const handleUsers = (user) => {
+        setUsers((prevSelect) => {[...prevSelect, user]})
+    }
+
     return (
         <>
             <div className="search-bar">
                 <input type="text" name="search" placeholder="Username" value={input} onChange={(e) => {setInput(e.target.value)}} />
             </div>
             <div className="search-query">
-                {result.map((user, id) => {
-                    return <div key={id}>{user.username}</div>
+                {result.map((user) => {
+                    return <div key={user.id} onClick={()=> {handleUsers(user)}}>{user.username}</div>
                 })}
             </div>
         </>
