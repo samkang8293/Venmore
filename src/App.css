@@ -71,3 +71,11 @@ input {
 .search-bar {
   padding: 20px 0px 10px;
 }
+
+.payBtn {
+  background-color: #008CFF;
+}
+
+#requestBtn, #paymentBtn {
+  margin: 5px;
+}
