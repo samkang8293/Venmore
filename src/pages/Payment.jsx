@@ -48,18 +48,24 @@ const Payment = () => {
 
     return (
         <>
+            <div className="absolute left-0 px-2.5 py-2.5">
+                <a href="/">Cancel</a>
+                {/* this is a placeholder for the X button that I will add later */}
+            </div>
             <div className="payment">
-                {/* set setUsers property in SearchBar component */}
+                <div className="py-2.5">
+                    <h1>Make a Payment or Request</h1>
+                </div>
                 <Search setUsers={setRecipients} />
-                <div className="">
-                    <label forHTML="amount">$</label>
+                <div className="py-2.5">
+                    <label htmlFor="amount">$</label>
                     <input type="number" name="amount" placeholder="Amount" onChange={(e) => {setAmount(e.target.value)}}/>
                 </div>
-                <div className="">
+                <div className="py-2.5">
                     <input type="text" name="comment" placeholder="What's this for?" onChange={(e) => {setComment(e.target.value)}}/>
                 </div>
-                <button>Pay</button>
-                <button onClick={handleRequest}>Request</button>
+                <button className="payBtn" id="paymentBtn">Pay</button>
+                <button className="payBtn" id="requestBtn" onClick={handleRequest}>Request</button>
             </div>
         </>
     )
