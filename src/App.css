@@ -58,3 +58,16 @@
   display: block;
   padding: 8px;
 }
+
+input {
+  display: flexbox;
+  justify-content: center;
+  align-items: center;
+  height: 3.5rem;
+  border-radius: 0.375rem;
+  border: 1px solid #d1d5db;
+}
+
+.search-bar {
+  padding: 20px 0px 10px;
+}
